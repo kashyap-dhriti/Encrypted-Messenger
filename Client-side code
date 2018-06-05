@@ -31,7 +31,7 @@ $(document).ready(function() {
 	socket.on('message', function(msg) {
 		var k=0, i=0;
 		var d= 2753, e=17;
-		var n= d*e;
+		var n= d*e; 
 		var len= msg.length();
 		var temp= [];
 		while(k<len)
