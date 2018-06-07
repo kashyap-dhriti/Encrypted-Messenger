@@ -1,6 +1,12 @@
 <html>
 <head>
 <title>Chat Room</title>
+<style>
+.button {
+	background-color: #f44336;
+	text-align: center;
+}
+</style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
@@ -46,12 +52,12 @@ $(document).ready(function() {
 		{
 			temp[i]= Math.pow(temp[i],d);
 			temp[i]%= n;
-			console.log(temp[i]);
 			temp[i]+= 97;
 			res+= String.fromCharCode(temp[i]);
 			console.log(res);
 		}
 		console.log(res);
+		res= res.fontsize(5);
 		$("#messages").append('<li>'+res+'</li>');
 		console.log('Received message');
 	});
@@ -77,6 +83,6 @@ $(document).ready(function() {
 </script>
 <ul id="messages"></ul>
 <input type="text" id="myMessage">
-<button id="sendbutton">Send</button>
+<button id="sendbutton" class="button">Send</button>
 </body>
 </html>
