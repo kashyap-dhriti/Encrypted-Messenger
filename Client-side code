@@ -9,64 +9,65 @@
 $(document).ready(function() {
 	var socket = io.connect('http://127.0.0.1:5000');
 	socket.on('connect', function() {
-		var connecmsg="A New User";
+		var connecmsg="user";
 		var len= connecmsg.length;
-		var d= 2753;
-		var e= 17;
-		var n= d*e;
+		var d= 9.0000;
+		var e= 9.0000;
+		var n= 55;
 		var temp= [];
 		var tempstr= [];
 		var k=-1;
 		for(var i=0; i<len; i++)
 		{
-			temp[i]= connecmsg[i]-97;
-			temp[i]= Math.pow(temp[i], e);
+			temp[i]= connecmsg.charCodeAt(i)-97;
+			temp[i]= Math.pow(temp[i],e);
 			temp[i]%= n;
-			tempstr[++k]= temp[i].toString();
-			tempstr[++k]="|"; 
+			tempstr[++k]= temp[i];
 		}
 		var finals= tempstr.toString();
 		socket.send(finals);
 	});
 	socket.on('message', function(msg) {
 		var k=0, i=0;
-		var d= 2753, e=17;
-		var n= d*e; 
-		var len= msg.length();
+		var d= 9.0000, e=9.0000;
+		var n= 55;
+		var len= msg.length;
 		var temp= [];
 		while(k<len)
 		{	var s="";
-			while(msg[k]!="|")
+			while(msg[k]!="," && msg[k]!="?" && k<len)
 				s+= msg[k++];
-			temp[i++]= parseFloat(s);
+			temp[i++]= parseInt(s);
+			console.log(temp[i-1]);
 			k++;
 		}
-		for(var i=0;i<temp.length;i++)
+		var res="";
+		for(i=0;i<temp.length;i++)
 		{
 			temp[i]= Math.pow(temp[i],d);
 			temp[i]%= n;
+			console.log(temp[i]);
 			temp[i]+= 97;
+			res+= String.fromCharCode(temp[i]);
+			console.log(res);
 		}
-		var msgrcv= temp.toString(temp);
-		$("#messages").append('<li>'+msgrcv+'</li>');
+		console.log(res);
+		$("#messages").append('<li>'+res+'</li>');
 		console.log('Received message');
 	});
 	$('#sendbutton').on('click', function() {
 		var mymsg= $('#myMessage').val();
 		var len= mymsg.length;
-		var d= 2753;
-		var e= 17;
-		var n= d*e;
+		var d= 9.000, e= 9.000, n=55;
 		var temp= [];
 		var tempstr= [];
 		var k=-1;
 		for(var i=0; i<len; i++)
 		{
-			temp[i]= mymsg[i]-97;
+			temp[i]= mymsg.charCodeAt(i)-97;
 			temp[i]= Math.pow(temp[i], e);
 			temp[i]%= n;
-			tempstr[++k]= temp[i].toString();
-			tempstr[++k]="|"; 
+			tempstr[++k]= temp[i];
 		}
 		var finals= tempstr.toString();
 		socket.send(finals);
